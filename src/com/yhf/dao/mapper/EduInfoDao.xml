@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.EduInfoDao" >
+
+    <sql id="eduInfoColumns">
+        id as id, name as name, sex as sex, birthday as birthday, head_img as headImg, enrollment_time as enrollmentTime, graduation_time as graduationTime, edu_category AS eduCategory, edu_level as eduLevel, graduate_from as graduateFrom,
+        graduate_address as graduateAddress, profession_name as professionName, study_type as studyType, certificate_no as certificationNo, graduation_result as graduationResult, edu_title AS eduTitle
+    </sql>
+
+    <!-- 插入对象 -->
+    <insert id="insert" parameterType="com.yhf.domain.EduInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO edu_info (id, name, sex, birthday, head_img, enrollment_time, graduation_time, edu_category, edu_level, graduate_from, graduate_address, profession_name, study_type, certificate_no, graduation_result, edu_title)
+        VALUES (#{id}, #{name}, #{sex}, #{birthday}, #{headImg}, #{enrollmentTime}, #{graduationTime}, #{eduCategory}, #{eduLevel}, #{graduateFrom}, #{graduateAddress}, #{professionName}, #{studyType}, #{certificationNo}, #{graduationResult}, #{eduTitle})
+    </insert>
+    <!-- 修改主体 -->
+    <update id="update" parameterType="com.yhf.domain.EduInfo" >
+        UPDATE edu_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="headImg != null">head_img = #{headImg},</if>
+            <if test="enrollmentTime != null">enrollment_time = #{enrollmentTime},</if>
+            <if test="graduationTime != null">graduation_time = #{graduationTime},</if>
+            <if test="eduCategory != null">edu_category = #{eduCategory},</if>
+            <if test="eduLevel != null">edu_level = #{eduLevel},</if>
+            <if test="graduateFrom != null">graduate_from = #{graduateFrom},</if>
+            <if test="graduateAddress != null">graduate_address = #{graduateAddress},</if>
+            <if test="professionName != null">profession_name = #{professionName},</if>
+            <if test="studyType != null">study_type = #{studyType},</if>
+            <if test="certificationNo != null">certificate_no = #{certificationNo},</if>
+            <if test="graduationResult != null">graduation_result = #{graduationResult},</if>
+            <if test="eduTitle != null">edu_title = #{eduTitle},</if>
+        </trim>
+        WHERE
+        ID=#{id}
+    </update>
+    <!--根据id获取对象-->
+    <select id="findById" resultType="com.yhf.domain.EduInfo" parameterType="Integer">
+        select <include refid="eduInfoColumns"/> from edu_info where id=#{id}
+    </select>
+    <!--根据对象获取集合-->
+    <select id="findByParam" resultType="com.yhf.domain.EduInfo" parameterType="com.yhf.domain.EduInfo">
+        select <include refid="eduInfoColumns"/> from edu_info
+        where 1=1
+        <if test="name != null">AND name = #{name}</if>
+        <if test="sex != null">AND sex = #{sex}</if>
+        <if test="birthday != null">AND birthday = #{birthday}</if>
+        <if test="headImg != null">AND head_img = #{headImg}</if>
+        <if test="enrollmentTime != null">AND enrollment_time = #{enrollmentTime}</if>
+        <if test="graduationTime != null">AND graduation_time = #{graduationTime}</if>
+        <if test="eduCategory != null">AND edu_category = #{eduCategory}</if>
+        <if test="eduLevel != null">AND edu_level = #{eduLevel}</if>
+        <if test="graduateFrom != null">AND graduate_from = #{graduateFrom}</if>
+        <if test="graduateAddress != null">AND graduate_address = #{graduateAddress}</if>
+        <if test="professionName != null">AND profession_name = #{professionName}</if>
+        <if test="studyType != null">AND study_type = #{studyType}</if>
+        <if test="certificationNo != null">AND certificate_no = #{certificationNo}</if>
+        <if test="graduationResult != null">AND graduation_result = #{graduationResult}</if>
+        <if test="eduTitle != null">AND edu_title = #{eduTitle}</if>
+    </select>
+
+</mapper>

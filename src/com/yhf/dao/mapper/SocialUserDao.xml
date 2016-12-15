@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.SocialUserDao" >
+
+    <sql id="socialColumns">
+        id as id, unit_name as unitName, organize_code as organizeCode, social_code as socialCode, unit_address as unitAddress, social_type as socialType, head_img as headImg, name as name, citizen_num as citizenNum, sex as sex, birthday as birthday, nation as nation, country as country, identity as identity, work_time as workTime,
+        registered_detail_address as registeredDetailAddress, registered_nature as registeredNature, registered_address as registeredAddress, registered_code as registeredCode,
+        local_address as localAddress, local_code AS localCode, bill_mail_address AS billMailAddress, bill_mail_code AS billMailCode, ext_bill_mode AS extBillMode, email AS email, edu_level AS eduLevel,
+        mobile AS mobile, phone AS phone, month_income AS monthIncome, card_num AS cardNum, card_type AS cardType, principal_bank AS principalBank, principal_bank_num AS principalBankNum, payment_type AS paymentType,
+        medical_type AS medicalType, retirement_type AS retirementType, retirement_time AS retirementTime, medical_organize1 AS medicalOrganize1, medical_organize2 AS medicalOrganize2, medical_organize3 AS medicalOrganize3,
+        medical_organize4 AS medicalOrganize4, medical_organize5 AS medicalOrganize5, special_defect AS specialDefect
+    </sql>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.yhf.domain.SocialUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO social_user (id, unit_name, organize_code, social_code, unit_address, social_type, head_img, name, citizen_num, sex, birthday, nation, country, identity, work_time, registered_detail_address, registered_nature, registered_address, registered_code, local_address, local_code,
+        bill_mail_address, bill_mail_code, ext_bill_mode, email, edu_level, mobile, phone, month_income, card_num, card_type, principal_bank, principal_bank_num, payment_type, medical_type, retirement_type, retirement_time, medical_organize1,
+        medical_organize2, medical_organize3, medical_organize4, medical_organize5, special_defect)
+        VALUES (#{id}, #{unitName}, #{organizeCode}, #{socialCode}, #{unitAddress}, #{socialType}, #{headImg}, #{name}, #{citizenNum}, #{sex}, #{birthday}, #{nation}, #{country}, #{identity}, #{workTime}, #{registeredDetailAddress}, #{registeredNature}, #{registeredAddress}, #{registeredCode}, #{localAddress},
+        #{localCode}, #{billMailAddress}, #{billMailCode}, #{extBillMode}, #{email}, #{eduLevel}, #{mobile}, #{phone}, #{monthIncome}, #{cardNum}, #{cardType}, #{principalBank}, #{principalBankNum}, #{paymentType}, #{medicalType}, #{retirementType},
+        #{retirementTime}, #{medicalOrganize1}, #{medicalOrganize2}, #{medicalOrganize3}, #{medicalOrganize4}, #{medicalOrganize5}, #{specialDefect}
+        )
+    </insert>
+
+    <!-- 修改主体 -->
+    <update id="update" parameterType="com.yhf.domain.SocialUser" >
+        UPDATE social_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="organizeCode != null">organize_code = #{organizeCode},</if>
+            <if test="socialCode != null">social_code = #{socialCode},</if>
+            <if test="unitAddress != null">unit_address = #{unitAddress},</if>
+            <if test="socialType != null">social_type = #{socialType},</if>
+            <if test="headImg != null">head_img = #{headImg},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="citizenNum != null">citizen_num = #{citizenNum},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="nation != null">nation = #{nation},</if>
+            <if test="country != null">country = #{country},</if>
+            <if test="identity != null">identity = #{identity},</if>
+            <if test="workTime != null">work_time = #{workTime},</if>
+            <if test="registeredDetailAddress != null">registered_detail_address = #{registeredDetailAddress},</if>
+            <if test="registeredNature != null">registered_nature = #{registeredNature},</if>
+            <if test="registeredAddress != null">registered_address = #{registeredAddress},</if>
+            <if test="registeredCode != null">registered_code = #{registeredCode},</if>
+            <if test="localAddress != null">local_address = #{localAddress},</if>
+            <if test="localCode != null">local_code = #{localCode},</if>
+            <if test="billMailAddress != null">bill_mail_address = #{billMailAddress},</if>
+            <if test="billMailCode != null">bill_mail_code = #{billMailCode},</if>
+            <if test="extBillMode != null">ext_bill_mode = #{extBillMode},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="eduLevel != null">edu_level = #{eduLevel},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="monthIncome != null">month_income = #{monthIncome},</if>
+            <if test="cardNum != null">card_num = #{cardNum},</if>
+            <if test="cardType != null">card_type = #{cardType},</if>
+            <if test="principalBank != null">principal_bank = #{principalBank},</if>
+            <if test="principalBankNum != null">principal_bank_num = #{principalBankNum},</if>
+            <if test="paymentType != null">payment_type = #{paymentType},</if>
+            <if test="medicalType != null">medical_type = #{medicalType},</if>
+            <if test="retirementType != null">retirement_type = #{retirementType},</if>
+            <if test="retirementTime != null">retirement_time = #{retirementTime},</if>
+            <if test="medicalOrganize1 != null">medical_organize1 = #{medicalOrganize1},</if>
+            <if test="medicalOrganize2 != null">medical_organize2 = #{medicalOrganize2},</if>
+            <if test="medicalOrganize3 != null">medical_organize3 = #{medicalOrganize3},</if>
+            <if test="medicalOrganize4 != null">medical_organize4 = #{medicalOrganize4},</if>
+            <if test="medicalOrganize5 != null">medical_organize5 = #{medicalOrganize5},</if>
+            <if test="specialDefect != null">special_defect = #{specialDefect},</if>
+        </trim>
+        WHERE
+        ID=#{id}
+    </update>
+
+    <select id="findById" resultType="com.yhf.domain.SocialUser" parameterType="Integer">
+        select <include refid="socialColumns"/> from social_user where id=#{id}
+    </select>
+    
+    <select id="findByCitizenNum" resultType="com.yhf.domain.SocialUser" parameterType="String">
+        select <include refid="socialColumns"/> from social_user where citizen_num=#{citizenNum}
+    </select>
+
+    <select id="findByParam" resultType="com.yhf.domain.SocialUser" parameterType="com.yhf.domain.SocialUser">
+        select <include refid="socialColumns"/> from social_user
+        where 1=1
+        <if test="id != null"> AND id = #{id}</if>
+        <if test="unitName != null">AND unit_name = #{unitName}</if>
+        <if test="organizeCode != null">AND organize_code = #{organizeCode}</if>
+        <if test="socialCode != null">AND social_code = #{socialCode}</if>
+        <if test="unitAddress != null">AND unit_address = #{unitAddress}</if>
+        <if test="socialType != null">AND social_type = #{socialType}</if>
+        <if test="headImg != null">AND head_img = #{headImg}</if>
+        <if test="name != null and name != ''">AND name = #{name}</if>
+        <if test="citizenNum != null">AND citizen_num = #{citizenNum}</if>
+        <if test="sex != null">AND sex = #{sex}</if>
+        <if test="birthday != null">AND birthday = #{birthday}</if>
+        <if test="nation != null">AND nation = #{nation}</if>
+        <if test="country != null">AND country = #{country}</if>
+        <if test="identity != null">AND identity = #{identity}</if>
+        <if test="workTime != null">AND work_time = #{workTime}</if>
+        <if test="registeredDetailAddress != null">AND registered_detail_address = #{registeredDetailAddress}</if>
+        <if test="registeredNature != null">AND registered_nature = #{registeredNature}</if>
+        <if test="registeredAddress != null">AND registered_address = #{registeredAddress}</if>
+        <if test="registeredCode != null">AND registered_code = #{registeredCode}</if>
+        <if test="localAddress != null">AND local_address = #{localAddress}</if>
+        <if test="localCode != null">AND local_code = #{localCode}</if>
+        <if test="billMailAddress != null">AND bill_mail_address = #{billMailAddress}</if>
+        <if test="billMailCode != null">AND bill_mail_code = #{billMailCode}</if>
+        <if test="extBillMode != null">AND ext_bill_mode = #{extBillMode}</if>
+        <if test="email != null">AND email = #{email}</if>
+        <if test="eduLevel != null">AND edu_level = #{eduLevel}</if>
+        <if test="mobile != null">AND mobile = #{mobile}</if>
+        <if test="phone != null">AND phone = #{phone}</if>
+        <if test="monthIncome != null">AND month_income = #{monthIncome}</if>
+        <if test="cardNum != null">AND card_num = #{cardNum}</if>
+        <if test="cardType != null">AND card_type = #{cardType}</if>
+        <if test="principalBank != null">AND principal_bank = #{principalBank}</if>
+        <if test="principalBankNum != null">AND principal_bank_num = #{principalBankNum}</if>
+        <if test="paymentType != null">AND payment_type = #{paymentType}</if>
+        <if test="medicalType != null">AND medical_type = #{medicalType}</if>
+        <if test="retirementType != null">AND retirement_type = #{retirementType}</if>
+        <if test="retirementTime != null">AND retirement_time = #{retirementTime}</if>
+        <if test="medicalOrganize1 != null">AND medical_organize1 = #{medicalOrganize1}</if>
+        <if test="medicalOrganize2 != null">AND medical_organize2 = #{medicalOrganize2}</if>
+        <if test="medicalOrganize3 != null">AND medical_organize3 = #{medicalOrganize3}</if>
+        <if test="medicalOrganize4 != null">AND medical_organize4 = #{medicalOrganize4}</if>
+        <if test="medicalOrganize5 != null">AND medical_organize5 = #{medicalOrganize5}</if>
+        <if test="specialDefect != null">AND special_defect = #{specialDefect}</if>
+    </select>
+
+</mapper>

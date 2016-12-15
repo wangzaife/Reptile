@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.SocialMedicalcareDao" >
+  <sql id="socialMedicalcareColumns" >
+    id as id, name as name, card_num as cardNum, payment_date as paymentDate, payment_num as paymentNum, unit_payment as unitPayment, unit_name as unitName
+  </sql>
+  <select id="findById" resultType="com.yhf.domain.SocialMedicalcare" parameterType="Integer">
+    select <include refid="socialMedicalcareColumns" /> from social_medicalcare where id = #{id}
+  </select>
+  
+  <insert id="insert" parameterType="com.yhf.domain.SocialMedicalcare" useGeneratedKeys="true" keyProperty="id">
+    insert into social_medicalcare (id, name, card_num, payment_date, payment_num, unit_payment, unit_name) 
+    values (#{id}, #{name}, #{cardNum}, #{paymentDate}, #{paymentNum}, #{unitPayment}, #{unitName})
+  </insert>
+  
+  <update id="update" parameterType="com.yhf.domain.SocialMedicalcare" >
+    update social_medicalcare
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="name != null" >name = #{name},</if>
+      <if test="cardNum != null" >card_num = #{cardNum},</if>
+      <if test="paymentDate != null" >payment_date = #{paymentDate},</if>
+      <if test="paymentNum != null" >payment_num = #{paymentNum},</if>
+      <if test="unitPayment != null" >unit_payment = #{unitPayment},</if>
+      <if test="unitName != null" >unit_name = #{unitName},</if>
+    </trim>
+    where id = #{id}
+  </update>
+  
+  <select id="findByParam" resultType="com.yhf.domain.SocialMedicalcare" parameterType="com.yhf.domain.SocialMedicalcare">
+  	select <include refid="socialMedicalcareColumns"/> from social_medicalcare
+		where 1=1
+	        <if test="id != null"> AND id = #{id}</if>
+			<if test="name != null and name != ''">AND name = #{name}</if>
+			<if test="cardNum != null and cardNum != ''">AND card_num = #{cardNum}</if>
+	        <if test="paymentDate != null">AND payment_date = #{paymentDate}</if>
+			<if test="paymentNum != null">AND payment_num = #{paymentNum}</if>
+			<if test="unitPayment != null">AND unit_payment = #{unitPayment}</if>
+			<if test="unitName != null" >AND unit_name = #{unitName}</if>
+  </select>
+  
+  <select id="findByGroup" resultType="com.yhf.vo.request.SocialMedicalcareVo" parameterType="String">
+	  SELECT CONCAT(MIN(care.payment_date),'~',max(care.payment_date)) as paymentDate, max(care.payment_num) as paymentNum, care.unit_name as unitName
+	  from social_medicalcare care WHERE care.card_num = #{cardNum} GROUP BY care.unit_name ORDER BY care.payment_date
+  </select>
+</mapper>

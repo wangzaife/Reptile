@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.SocialInjureDao" >
+  <sql id="socialInjureColumns" >
+    id as id, name as name, card_num as cardNum, payment_date as paymentDate, payment_num as paymentNum, unit_payment as unitPayment
+  </sql>
+  <select id="findById" resultType="com.yhf.domain.SocialInjure" parameterType="Integer">
+    select <include refid="socialInjureColumns" /> from social_injure where id = #{id}
+  </select>
+  
+  <insert id="insert" parameterType="com.yhf.domain.SocialInjure" useGeneratedKeys="true" keyProperty="id">
+    insert into social_injure (id, name, card_num, payment_date, payment_num, unit_payment) 
+    values (#{id}, #{name}, #{cardNum}, #{paymentDate}, #{paymentNum}, #{unitPayment})
+  </insert>
+  
+  <update id="update" parameterType="com.yhf.domain.SocialInjure" >
+    update social_injure
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="name != null" >name = #{name},</if>
+      <if test="cardNum != null" >card_num = #{cardNum},</if>
+      <if test="paymentDate != null" >payment_date = #{paymentDate},</if>
+      <if test="paymentNum != null" >payment_num = #{paymentNum},</if>
+      <if test="unitPayment != null" >unit_payment = #{unitPayment},</if>
+    </trim>
+    where id = #{id}
+  </update>
+  
+  <select id="findByParam" resultType="com.yhf.domain.SocialInjure" parameterType="com.yhf.domain.SocialInjure">
+  	select <include refid="socialInjureColumns"/> from social_injure
+		where 1=1
+	        <if test="id != null"> AND id = #{id}</if>
+			<if test="name != null and name != ''">AND name = #{name}</if>
+			<if test="cardNum != null and cardNum != ''">AND card_num = #{cardNum}</if>
+	        <if test="paymentDate != null">AND payment_date = #{paymentDate}</if>
+			<if test="paymentNum != null">AND payment_num = #{paymentNum}</if>
+			<if test="unitPayment != null">AND unit_payment = #{unitPayment}</if>
+  </select>
+</mapper>

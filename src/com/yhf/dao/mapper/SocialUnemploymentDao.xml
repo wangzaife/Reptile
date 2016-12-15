@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.SocialUnemploymentDao" >
+  <sql id="socialUnemploymentColumns" >
+    id as id, name as name, card_num as cardNum, payment_date as paymentDate, payment_num as paymentNum, unit_payment as unitPayment, user_payment as userPayment
+  </sql>
+  <select id="findById" resultType="com.yhf.domain.SocialUnemployment" parameterType="Integer">
+    select <include refid="socialUnemploymentColumns" /> from social_unemployment where id = #{id}
+  </select>
+  
+  <insert id="insert" parameterType="com.yhf.domain.SocialUnemployment" useGeneratedKeys="true" keyProperty="id">
+    insert into social_unemployment (id, name, card_num, payment_date, payment_num, unit_payment, user_payment) 
+    values (#{id}, #{name}, #{cardNum}, #{paymentDate}, #{paymentNum}, #{unitPayment}, #{userPayment})
+  </insert>
+  
+  <update id="update" parameterType="com.yhf.domain.SocialUnemployment" >
+    update social_unemployment
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="name != null" >name = #{name},</if>
+      <if test="cardNum != null" >card_num = #{cardNum},</if>
+      <if test="paymentDate != null" >payment_date = #{paymentDate},</if>
+      <if test="paymentNum != null" >payment_num = #{paymentNum},</if>
+      <if test="unitPayment != null" >unit_payment = #{unitPayment},</if>
+      <if test="userPayment != null" >user_payment = #{userPayment},</if>
+    </trim>
+    where id = #{id}
+  </update>
+  
+  <select id="findByParam" resultType="com.yhf.domain.SocialUnemployment" parameterType="com.yhf.domain.SocialUnemployment">
+  	select <include refid="socialUnemploymentColumns"/> from social_unemployment
+		where 1=1
+	        <if test="id != null"> AND id = #{id}</if>
+			<if test="name != null and name != ''">AND name = #{name}</if>
+			<if test="cardNum != null and cardNum != ''">AND card_num = #{cardNum}</if>
+	        <if test="paymentDate != null">AND payment_date = #{paymentDate}</if>
+			<if test="paymentNum != null">AND payment_num = #{paymentNum}</if>
+			<if test="unitPayment != null">AND unit_payment = #{unitPayment}</if>
+			<if test="userPayment != null">AND user_payment = #{userPayment}</if>
+  </select>
+</mapper>

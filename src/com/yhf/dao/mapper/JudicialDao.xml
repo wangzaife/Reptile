@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.JudicialDao" >
+
+  <sql id="judicialColumns">
+		id as id, name as name, card_num as cardNum, case_code as caseCode, age as age, sex as sex, area_name as areaName, court_name as courtName, duty as duty, 
+		performance as performance, disrupt_type_name as disruptTypeName, publish_date as publishDate, reg_date as regDate, gist_unit as gistUnit
+	</sql>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="com.yhf.domain.Judicial" useGeneratedKeys="true" keyProperty="id">
+  	INSERT INTO judicial (id, name, card_num, case_code, age, sex, area_name, court_name, duty, performance, disrupt_type_name, publish_date, reg_date, gist_unit) 
+  	VALUES (#{id}, #{name}, #{cardNum}, #{caseCode}, #{age}, #{sex}, #{areaName}, #{courtName}, #{duty}, #{performance}, #{disruptTypeName}, #{publishDate}, #{regDate}, #{gistUnit})
+  </insert>
+  <!-- 修改主体 -->
+  <update id="update" parameterType="com.yhf.domain.Judicial" >
+  	UPDATE judicial 
+	        <trim prefix="SET" suffixOverrides=",">
+				<if test="name != null">name = #{name},</if>
+				<if test="cardNum != null">card_num = #{cardNum},</if>
+				<if test="caseCode != null">case_code = #{caseCode},</if>
+				<if test="age != null">age = #{age},</if>
+				<if test="sex != null">sex = #{sex},</if>
+				<if test="areaName != null">area_name = #{areaName},</if>
+				<if test="courtName != null">court_name = #{courtName},</if>
+				<if test="duty != null">duty = #{duty},</if>
+				<if test="performance != null">performance = #{performance},</if>
+				<if test="disruptTypeName != null">disrupt_type_name = #{disruptTypeName},</if>
+				<if test="publishDate != null">publish_date = #{publishDate},</if>
+				<if test="regDate != null">reg_date = #{regDate},</if>
+				<if test="gistUnit != null">gist_unit = #{gistUnit},</if>
+			</trim>
+        WHERE 
+        	ID=#{id}
+  </update>
+  
+  <select id="findById" resultType="com.yhf.domain.Judicial" parameterType="Integer">
+  	select <include refid="judicialColumns"/> from judicial where id=#{id}
+  </select>
+  
+  <select id="findByParam" resultType="com.yhf.domain.Judicial" parameterType="com.yhf.domain.Judicial">
+  	select <include refid="judicialColumns"/> from judicial
+		where 1=1
+	        <if test="id != null"> AND id = #{id}</if>
+			<if test="name != null and name != ''">AND name = #{name}</if>
+			<if test="cardNum != null and cardNum != ''">AND card_num = #{cardNum}</if>
+	        <if test="caseCode != null">AND case_code = #{caseCode}</if>
+			<if test="age != null">AND age = #{age}</if>
+			<if test="sex != null">AND sex = #{sex}</if>
+			<if test="areaName != null">AND area_name = #{areaName}</if>
+			<if test="courtName != null">AND court_name = #{courtName}</if>
+			<if test="duty != null">AND duty = #{duty}</if>
+			<if test="performance != null">AND performance = #{performance}</if>
+			<if test="disruptTypeName != null">AND disrupt_type_name = #{disruptTypeName}</if>
+			<if test="publishDate != null">AND publish_date = #{publishDate}</if>
+			<if test="regDate != null">AND reg_date = #{regDate}</if>
+			<if test="gistUnit != null">AND gist_unit = #{gistUnit}</if>
+  </select>
+  
+</mapper>

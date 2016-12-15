@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhf.dao.SocialMaternityDao" >
+  <sql id="socialMaternityColumns" >
+    id as id, name as name, card_num as cardNum, settle_time as settleTime, payment_num as paymentNum, unit_payment as unitPayment
+  </sql>
+  <select id="findById" resultType="com.yhf.domain.SocialMaternity" parameterType="Integer">
+    select <include refid="socialMaternityColumns" /> from social_maternity where id = #{id}
+  </select>
+  
+  <insert id="insert" parameterType="com.yhf.domain.SocialMaternity" useGeneratedKeys="true" keyProperty="id">
+    insert into social_maternity (id, name, card_num, settle_time, payment_num, unit_payment) 
+    values (#{id}, #{name}, #{cardNum}, #{settleTime}, #{paymentNum}, #{unitPayment})
+  </insert>
+  
+  <update id="update" parameterType="com.yhf.domain.SocialMaternity" >
+    update social_maternity
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="name != null" >name = #{name},</if>
+      <if test="cardNum != null" >card_num = #{cardNum},</if>
+      <if test="settleTime != null" >settle_time = #{settleTime},</if>
+      <if test="paymentNum != null" >payment_num = #{paymentNum},</if>
+      <if test="unitPayment != null" >unit_payment = #{unitPayment},</if>
+    </trim>
+    where id = #{id}
+  </update>
+  
+  <select id="findByParam" resultType="com.yhf.domain.SocialMaternity" parameterType="com.yhf.domain.SocialMaternity">
+  	select <include refid="socialMaternityColumns"/> from social_maternity
+		where 1=1
+	        <if test="id != null"> AND id = #{id}</if>
+			<if test="name != null and name != ''">AND name = #{name}</if>
+			<if test="cardNum != null and cardNum != ''">AND card_num = #{cardNum}</if>
+	        <if test="settleTime != null">AND settle_time = #{settleTime}</if>
+			<if test="paymentNum != null">AND payment_num = #{paymentNum}</if>
+			<if test="unitPayment != null">AND unit_payment = #{unitPayment}</if>
+  </select>
+</mapper>
